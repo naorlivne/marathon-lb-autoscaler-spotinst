@@ -18,8 +18,8 @@ def get_elb_requests(elb_name):
 
     cloudwatch_metric_data = client.get_metric_statistics(
         Period=300,
-        StartTime=datetime.datetime.utcnow() - datetime.timedelta(minutes=6),
-        EndTime=datetime.datetime.utcnow() - datetime.timedelta(minutes=1),
+        StartTime=datetime.datetime.utcnow() - datetime.timedelta(minutes=10),
+        EndTime=datetime.datetime.utcnow() - datetime.timedelta(minutes=5),
         MetricName='RequestCount',
         Namespace='AWS/ELB',
         Statistics=['Sum'],

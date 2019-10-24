@@ -5,7 +5,7 @@ import requests
 from parse_it import ParseIt
 
 
-parser = ParseIt(type_estimate=False)
+parser = ParseIt()
 marathon_url = parser.read_configuration_variable("marathon_url")
 marathon_port = parser.read_configuration_variable("marathon_port")
 elb_name = parser.read_configuration_variable("elb_name")
@@ -36,7 +36,7 @@ def get_elb_requests(aws_elb_name):
 
 
 def change_marathon_lb_size(marathon_host_url, marathon_host_port, new_size, marathon_app_name):
-    url = marathon_host_url + ":" + marathon_host_port + "/v2/apps/" + marathon_app_name + "/"
+    url = marathon_host_url + ":" + str(marathon_host_port) + "/v2/apps/" + marathon_app_name + "/"
 
     querystring = {"force": "true"}
 
@@ -68,7 +68,7 @@ def get_spotinst_instances(auth_token, elastigroup):
 
 
 def get_marathon_lb_tasks(marathon_host_url, marathon_host_port, marathon_app_name):
-    url = marathon_host_url + ":" + marathon_host_port + "/v2/apps/" + marathon_app_name + "/tasks"
+    url = marathon_host_url + ":" + str(marathon_host_port) + "/v2/apps/" + marathon_app_name + "/tasks"
 
     headers = {
         'cache-control': "no-cache"
@@ -98,7 +98,7 @@ def set_spotinst_elastigroup_size(auth_token, elastigroup, instance_size):
 
 requests_last_minute = get_elb_requests(elb_name)
 print("there was an average of " + str(requests_last_minute) + " requests per minute over the last 5 minutes")
-marathon_lb_needed = int(math.ceil(requests_last_minute / lb_per_x_connections))
+marathon_lb_needed = int(math.ceil(int(requests_last_minute) / int(lb_per_x_connections)))
 if int(marathon_lb_needed) < int(min_num_of_lb):
     marathon_lb_needed = int(min_num_of_lb)
 print("there are " + str(marathon_lb_needed) + " marathon-lb instances needed")

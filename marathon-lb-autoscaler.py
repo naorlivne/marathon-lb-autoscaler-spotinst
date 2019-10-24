@@ -1,7 +1,6 @@
 import boto3
 import datetime
 import math
-import os
 import requests
 from parse_it import ParseIt
 

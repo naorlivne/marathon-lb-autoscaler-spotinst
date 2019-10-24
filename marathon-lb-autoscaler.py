@@ -6,7 +6,7 @@ import requests
 from parse_it import ParseIt
 
 
-parser = ParseIt()
+parser = ParseIt(type_estimate=False)
 marathon_url = parser.read_configuration_variable("marathon_url")
 marathon_port = parser.read_configuration_variable("marathon_port")
 elb_name = parser.read_configuration_variable("elb_name")

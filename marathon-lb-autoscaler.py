@@ -3,15 +3,19 @@ import datetime
 import math
 import os
 import requests
+from parse_it import ParseIt
 
-marathon_url = os.environ["MARATHON_URL"]
-marathon_port = os.environ["MARATHON_PORT"]
-elb_name = os.environ["ELB_NAME"]
-min_num_of_lb = int(os.environ["MIN_NUM_OF_LB"])
-lb_per_x_connections = int(os.environ["LB_PER_X_CONNECTIONS"])
-spotinst_auth_token = os.environ["SPOTINST_AUTH_TOKEN"]
-spotinst_account_id = os.environ["SPOTINST_ACCOUNT_ID"]
-elastigroup_id = os.environ["ELASTIGROUP_ID"]
+
+parser = ParseIt()
+marathon_url = parser.read_configuration_variable("marathon_url")
+marathon_port = parser.read_configuration_variable("marathon_port")
+elb_name = parser.read_configuration_variable("elb_name")
+min_num_of_lb = parser.read_configuration_variable("min_num_of_lb")
+lb_per_x_connections = parser.read_configuration_variable("lb_per_x_connections")
+spotinst_auth_token = parser.read_configuration_variable("spotinst_auth_token")
+spotinst_account_id = parser.read_configuration_variable("spotinst_account_id")
+elastigroup_id = parser.read_configuration_variable("elastigroup_id")
+app_name = parser.read_configuration_variable("app_name", default_value="marathon-lb")
 
 
 def get_elb_requests(aws_elb_name):
@@ -32,8 +36,8 @@ def get_elb_requests(aws_elb_name):
     return int(cloudwatch_metric_data["Datapoints"][0]["Sum"] / 5)
 
 
-def change_marathon_lb_size(marathon_host_url, marathon_host_port, new_size):
-    url = marathon_host_url + ":" + marathon_host_port + "/v2/apps/marathon-lb/"
+def change_marathon_lb_size(marathon_host_url, marathon_host_port, new_size, marathon_app_name):
+    url = marathon_host_url + ":" + marathon_host_port + "/v2/apps/" + marathon_app_name + "/"
 
     querystring = {"force": "true"}
 
@@ -64,8 +68,8 @@ def get_spotinst_instances(auth_token, elastigroup):
     return int(response_json["response"]["count"])
 
 
-def get_marathon_lb_tasks(marathon_host_url, marathon_host_port):
-    url = marathon_host_url + ":" + marathon_host_port + "/v2/apps/marathon-lb/tasks"
+def get_marathon_lb_tasks(marathon_host_url, marathon_host_port, marathon_app_name):
+    url = marathon_host_url + ":" + marathon_host_port + "/v2/apps/" + marathon_app_name + "/tasks"
 
     headers = {
         'cache-control': "no-cache"
@@ -101,7 +105,7 @@ if int(marathon_lb_needed) < int(min_num_of_lb):
 print("there are " + str(marathon_lb_needed) + " marathon-lb instances needed")
 current_spotinst_instances = get_spotinst_instances(spotinst_auth_token, elastigroup_id)
 print("there are currently " + str(current_spotinst_instances) + " marathon-lb spot instances")
-current_marathon_lb_tasks = get_marathon_lb_tasks(marathon_url, marathon_port)
+current_marathon_lb_tasks = get_marathon_lb_tasks(marathon_url, marathon_port, app_name)
 print("there are currently " + str(current_marathon_lb_tasks) + " marathon-lb tasks")
 if current_marathon_lb_tasks == current_spotinst_instances == marathon_lb_needed:
     print("no changes needed - exiting")
@@ -110,7 +114,8 @@ else:
     print("scaling spot instances & marathon-lb tasks to " + str(marathon_lb_needed))
     spotinst_rescale_status_code = set_spotinst_elastigroup_size(spotinst_auth_token, elastigroup_id,
                                                                  marathon_lb_needed)
-    marathon_rescale_status_code = change_marathon_lb_size(marathon_url, marathon_port, str(marathon_lb_needed))
+    marathon_rescale_status_code = change_marathon_lb_size(marathon_url, marathon_port, str(marathon_lb_needed),
+                                                           app_name)
     if marathon_rescale_status_code != spotinst_rescale_status_code != 200:
         if marathon_rescale_status_code != 200:
             print("critical - failed to scale marathon-lb tasks")

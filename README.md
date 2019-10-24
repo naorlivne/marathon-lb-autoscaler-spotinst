@@ -14,6 +14,7 @@ required envs:
 * SPOTINST_AUTH_TOKEN
 * SPOTINST_ACCOUNT_ID
 * ELASTIGROUP_ID
+* APP_NAME (app name in marathon, defaults to "marathon-lb")
 
 
 example metronome job config:

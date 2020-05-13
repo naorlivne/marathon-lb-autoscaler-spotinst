@@ -6,7 +6,7 @@ configobj==5.0.6
 docutils==0.16
 dpath==2.0.1
 idna==2.9
-jmespath==0.9.5
+jmespath==0.10.0
 parse-it==3.4.0
 ply==3.11
 pyhcl==0.4.4

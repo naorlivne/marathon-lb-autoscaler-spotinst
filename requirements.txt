@@ -1,5 +1,5 @@
 boto3==1.15.6
-botocore==1.18.6
+botocore==1.18.7
 certifi==2020.6.20
 chardet==3.0.4
 configobj==5.0.6

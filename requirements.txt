@@ -1,4 +1,4 @@
-boto3==1.15.17
+boto3==1.15.18
 botocore==1.18.18
 certifi==2020.6.20
 chardet==3.0.4

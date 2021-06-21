@@ -11,7 +11,7 @@ parse-it==2021.6.2.12.14
 ply==3.11
 pyhcl==0.4.4
 python-dateutil==2.8.1
-python-dotenv==0.17.1
+python-dotenv==0.18.0
 PyYAML==5.4.1
 requests==2.25.1
 s3transfer==0.4.2

@@ -5,7 +5,7 @@ chardet==4.0.0
 configobj==5.0.6
 docutils==0.17.1
 dpath==2.0.1
-idna==3.1
+idna==3.2
 jmespath==0.10.0
 parse-it==2021.7.14.11.11
 ply==3.11

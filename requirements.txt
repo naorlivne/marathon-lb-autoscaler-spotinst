@@ -4,7 +4,7 @@ certifi==2022.12.7
 chardet==5.0.0
 configobj==5.0.8
 docutils==0.19
-dpath==2.1.0
+dpath==2.1.4
 idna==3.4
 jmespath==1.0.1
 parse-it==2022.11.29.8.54

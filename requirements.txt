@@ -3,7 +3,7 @@ botocore==1.29.135
 certifi==2023.5.7
 chardet==5.1.0
 configobj==5.0.8
-docutils==0.20
+docutils==0.20.1
 dpath==2.1.5
 idna==3.4
 jmespath==1.0.1

@@ -9,7 +9,7 @@ idna==3.4
 jmespath==1.0.1
 parse-it==2023.7.31.10.21
 ply==3.11
-pyhcl==0.4.4
+pyhcl==0.4.5
 python-dateutil==2.8.2
 python-dotenv==1.0.0
 PyYAML==6.0.1

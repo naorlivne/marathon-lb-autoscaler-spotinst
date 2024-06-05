@@ -1,6 +1,6 @@
 boto3==1.34.116
 botocore==1.34.119
-certifi==2024.2.2
+certifi==2024.6.2
 chardet==5.2.0
 configobj==5.0.8
 docutils==0.21.2

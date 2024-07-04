@@ -1,4 +1,4 @@
-boto3==1.34.134
+boto3==1.34.139
 botocore==1.34.133
 certifi==2024.6.2
 chardet==5.2.0

@@ -17,5 +17,5 @@ requests==2.32.3
 s3transfer==0.13.0
 six==1.17.0
 toml==0.10.2
-urllib3==2.3.0
+urllib3==2.5.0
 xmltodict==0.14.2

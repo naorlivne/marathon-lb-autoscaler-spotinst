@@ -3,7 +3,7 @@ boto3==1.38.29
 certifi==2025.4.26
 chardet==5.2.0
 configobj==5.0.9
-docutils==0.21.2
+docutils==0.22
 dpath==2.2.0
 idna==3.10
 jmespath==1.0.1
